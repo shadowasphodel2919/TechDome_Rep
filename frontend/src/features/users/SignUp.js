@@ -51,7 +51,7 @@ const SignUp = () => {
             setEmail('')
             setMobile('')
             setFields([])
-            navigate('/dash/users')
+            navigate('/login')
         }
     }, [isSuccess, navigate])
 

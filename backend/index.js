@@ -10,17 +10,17 @@ const PORT = 3600
 
 connectDB()
 
-// app.use(cors(corsOptions))
-app.use(cors({
-    origin: ['https://techdome.vercel.app/','https://techdom.onrender.com/'],
-    credentials: true
-}));
+app.use(cors(corsOptions))
+// app.use(cors({
+//     origin: ['https://techdome.vercel.app/','https://techdom.onrender.com/'],
+//     credentials: true
+// }));
 
-app.use((req,res,next) => {
-    res.header('Access-Control-Allow-Origin', 'https://techdom.onrender.com/');
-    res.header('Access-Control-Allow-Credentials', true);
-    next();
-})
+// app.use((req,res,next) => {
+//     res.header('Access-Control-Allow-Origin', 'https://techdom.onrender.com/');
+//     res.header('Access-Control-Allow-Credentials', true);
+//     next();
+// })
 
 app.use(express.json())
 
