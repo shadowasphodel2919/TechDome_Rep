@@ -3,7 +3,7 @@ import { setCredentials} from '../../features/auth/authSlice'
 
 const baseQuery = fetchBaseQuery({
     baseUrl: 'https://techdome.onrender.com/',
-    credentials: 'include',
+    // credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token
 
