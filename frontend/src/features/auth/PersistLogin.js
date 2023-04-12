@@ -9,10 +9,10 @@ import { selectCurrentToken } from "./authSlice"
 const PersistLogin = () => {
 
     const [persist] = usePersist()
-    // const token = useSelector(selectCurrentToken)
-    let token = ""
-    token = localStorage.getItem("token")
-    console.log(token);
+    const token = useSelector(selectCurrentToken)
+    // let token = ""
+    // token = localStorage.getItem("token")
+    // console.log(token);
     const effectRan = useRef(false)
 
     const [trueSuccess, setTrueSuccess] = useState(false)

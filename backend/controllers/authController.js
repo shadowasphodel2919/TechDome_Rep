@@ -2,6 +2,7 @@ const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
+const cookieParser = require('cookie-parser')
 
 const login = asyncHandler(async (req, res)=>{
     const {username, password} = req.body;
@@ -52,9 +53,9 @@ const login = asyncHandler(async (req, res)=>{
 // @access Public - because access token has expired
 const refresh = (req, res) => {
     const cookies = req.cookies //will accept cookies
-    console.log(req.cookies);
+    console.log(req.cookies.jwt);
     console.log("Cookies accepted");
-    if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized' })
+    if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized: Cookie not found' })
 
     const refreshToken = cookies.jwt
 
@@ -67,7 +68,7 @@ const refresh = (req, res) => {
 
             const foundUser = await User.findOne({ username: decoded.username }).exec()
 
-            if (!foundUser) return res.status(401).json({ message: 'Unauthorized' })
+            if (!foundUser) return res.status(401).json({ message: 'Unauthorized : User Not Found' })
 
             const accessToken = jwt.sign(
                 {

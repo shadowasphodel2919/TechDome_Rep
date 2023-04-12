@@ -4,6 +4,7 @@ const app = express()
 const path = require('path')
 const connectDB = require('./config/dbConn')
 const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
 const PORT = 3600
@@ -11,18 +12,10 @@ const PORT = 3600
 connectDB()
 
 app.use(cors(corsOptions))
-// app.use(cors({
-//     origin: ['https://techdome.vercel.app/','https://techdom.onrender.com/'],
-//     credentials: true
-// }));
-
-// app.use((req,res,next) => {
-//     res.header('Access-Control-Allow-Origin', 'https://techdom.onrender.com/');
-//     res.header('Access-Control-Allow-Credentials', true);
-//     next();
-// })
 
 app.use(express.json())
+
+app.use(cookieParser())
 
 app.use('/', express.static(path.join(__dirname, '/public')))
 

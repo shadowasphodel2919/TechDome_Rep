@@ -3,9 +3,10 @@ import { selectCurrentToken } from "../features/auth/authSlice";
 import jwtDecode from 'jwt-decode'
 
 const useAuth = () => {
-    // const token = useSelector(selectCurrentToken)
-    let token = ""
-    token = localStorage.getItem("token")
+    const token = useSelector(selectCurrentToken)
+    console.log("UseAuth"+token);
+    // let token = ""
+    // token = localStorage.getItem("token")
     if(token){
         const decoded = jwtDecode(token)
         const {username, email, mobile, fields} = decoded.UserInfo

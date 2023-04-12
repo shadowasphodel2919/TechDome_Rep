@@ -32,8 +32,9 @@ const Login = () => {
     e.preventDefault()
     try {
         const { accessToken } = await login({ username, password }).unwrap()
+        // console.log(accessToken);
         dispatch(setCredentials({ accessToken })) //set token
-        localStorage.setItem("token",accessToken)
+        // localStorage.setItem("token",accessToken)
         setUsername('')
         setPassword('')
         navigate('/dash')

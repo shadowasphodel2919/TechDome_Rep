@@ -10,7 +10,7 @@ const Careerjet = () => {
     },[]);
     let str = "";
     const interests = Object.values(fields).map(field=>{
-        str += field
+        str += field+" "
         return (
             <p>
                 {field}
@@ -18,7 +18,7 @@ const Careerjet = () => {
         )
     })
     const getAllData = () => {
-        fetch('https://techdome.onrender.com/dash/jobs', {
+        fetch('http://localhost:3600/dash/jobs', {
             method: 'POST',
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({
