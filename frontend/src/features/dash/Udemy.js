@@ -20,7 +20,7 @@ const Udemy = () => {
     // console.log(str);
 
     const getAllData = () => {
-        fetch('http://localhost:3600/dash/courses', {
+        fetch('https://techdome.onrender.com/dash/courses', {
             method: 'POST',
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({

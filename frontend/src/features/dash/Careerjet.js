@@ -18,7 +18,7 @@ const Careerjet = () => {
         )
     })
     const getAllData = () => {
-        fetch('http://localhost:3600/dash/jobs', {
+        fetch('https://techdome.onrender.com/dash/jobs', {
             method: 'POST',
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({
