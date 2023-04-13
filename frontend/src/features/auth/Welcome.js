@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 
 const Welcome = () => {
@@ -7,10 +7,20 @@ const Welcome = () => {
     const {username, email, mobile, fields} = useAuth();
     const date = new Date()
     const today = new Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'long' }).format(date)
-    const handleSubmit = () => {
-        localStorage.removeItem('token');
-        window.location.href = "http://localhost:3000/";
-    }
+    const navigate = useNavigate()
+    const [sendLogout, {
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    }] = useSendLogoutMutation()
+    useEffect(() => {
+        if (isSuccess) navigate('/')
+    }, [isSuccess, navigate])
+    // const handleSubmit = () => {
+    //     localStorage.removeItem('token');
+    //     window.location.href = "https://techdome.vercel.app/";
+    // }
     const content = (
         <section className="welcome">
             <img src='https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg' className='img-thumbnail'/>
@@ -23,7 +33,7 @@ const Welcome = () => {
 
                 <p><Link to="/dash/udemy">View Courses</Link></p>
                 <p><Link to="/dash/careerjet">View Jobs</Link></p>
-                <p><Link onClick={(e)=>handleSubmit(e)}>Log Out</Link></p>
+                <p><Link onClick={sendLogout}>Log Out</Link></p>
             </div>
 
         </section>
