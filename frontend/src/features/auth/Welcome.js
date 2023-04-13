@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useSendLogoutMutation } from '../features/auth/authApiSlice'
+import { useSendLogoutMutation } from './authApiSlice'
 import useAuth from '../../hooks/useAuth'
 
 const Welcome = () => {
