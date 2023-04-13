@@ -116,7 +116,7 @@ const SignUp = () => {
                 </label>
                 <input
                     className={`form__input ${validEmailClass}`}
-                    id="username"
+                    id="email"
                     type="text"
                     autoComplete="off"
                     value={email}
