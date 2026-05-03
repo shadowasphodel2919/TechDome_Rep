@@ -3,6 +3,7 @@ import { BookOpen, RefreshCw, AlertCircle, Youtube, Info } from 'lucide-react'
 import useAuth from '../../hooks/useAuth'
 import CourseCard from '../../components/CourseCard'
 import SkeletonCard from '../../components/ui/SkeletonCard'
+import BASE_URL from '../../app/api/baseUrl'
 import styles from './Dash.module.css'
 
 const SOURCE_LABELS = {
@@ -30,7 +31,7 @@ const Udemy = () => {
         setError(null)
         setFallbackMsg(null)
         try {
-            const res = await fetch('/dash/courses', {
+            const res = await fetch(`${BASE_URL}/dash/courses`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',

@@ -3,6 +3,7 @@ import { Briefcase, RefreshCw, AlertCircle, MapPin, Navigation, ChevronDown } fr
 import useAuth from '../../hooks/useAuth'
 import JobCard from '../../components/JobCard'
 import SkeletonCard from '../../components/ui/SkeletonCard'
+import BASE_URL from '../../app/api/baseUrl'
 import styles from './Dash.module.css'
 
 const POPULAR_CITIES = [
@@ -71,7 +72,7 @@ const Careerjet = () => {
         setError(null)
         setSearched(true)
         try {
-            const res = await fetch('/dash/jobs', {
+            const res = await fetch(`${BASE_URL}/dash/jobs`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
