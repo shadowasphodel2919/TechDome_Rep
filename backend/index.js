@@ -6,40 +6,35 @@ const { connectDB } = require('./config/dbConn')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
-const PORT = process.env.PORT || 3600
 
-const startServer = async () => {
-    try {
-        await connectDB()
+// Initialize DB client synchronously for serverless
+connectDB()
 
-        app.use(cors(corsOptions))
-        app.use(express.json())
-        app.use(cookieParser())
-        app.use('/', express.static(path.join(__dirname, '/public')))
+app.use(cors(corsOptions))
+app.use(express.json())
+app.use(cookieParser())
+app.use('/', express.static(path.join(__dirname, '/public')))
 
-        app.use('/', require('./routes/root'))
-        app.use('/auth', require('./routes/authRoutes'))
-        app.use('/users', require('./routes/userRoutes'))
-        app.use('/dash', require('./routes/dashRoutes'))
+app.use('/', require('./routes/root'))
+app.use('/auth', require('./routes/authRoutes'))
+app.use('/users', require('./routes/userRoutes'))
+app.use('/dash', require('./routes/dashRoutes'))
 
-        app.all('*', (req, res) => {
-            res.status(404)
-            if (req.accepts('html')) {
-                res.sendFile(path.join(__dirname, 'views', '404.html'))
-            } else if (req.accepts('json')) {
-                res.json({ message: '404 Not Found' })
-            } else {
-                res.type('txt').send('404 Not Found')
-            }
-        })
-
-        app.listen(PORT, () =>
-            console.log(`🚀 SkillOrbit server running on port ${PORT}`)
-        )
-    } catch (err) {
-        console.error('❌ Failed to start server:', err.message)
-        process.exit(1)
+app.all('*', (req, res) => {
+    res.status(404)
+    if (req.accepts('html')) {
+        res.sendFile(path.join(__dirname, 'views', '404.html'))
+    } else if (req.accepts('json')) {
+        res.json({ message: '404 Not Found' })
+    } else {
+        res.type('txt').send('404 Not Found')
     }
+})
+
+// Only start the server locally. Vercel handles requests directly via module.exports
+if (!process.env.VERCEL) {
+    const PORT = process.env.PORT || 3600
+    app.listen(PORT, () => console.log(`🚀 SkillOrbit server running on port ${PORT}`))
 }
 
-startServer()
+module.exports = app

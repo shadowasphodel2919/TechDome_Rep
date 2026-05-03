@@ -2,23 +2,20 @@ const { neon } = require('@neondatabase/serverless')
 
 let sql
 
-const connectDB = async () => {
+const connectDB = () => {
     if (!process.env.DATABASE_URL) {
-        throw new Error('DATABASE_URL is not set in environment variables.')
+        console.warn('⚠️ DATABASE_URL is not set in environment variables.')
+        return
     }
-    try {
-        sql = neon(process.env.DATABASE_URL)
-        // Verify connection with a lightweight ping
-        await sql`SELECT 1`
-        console.log('✅ Connected to Neon PostgreSQL')
-    } catch (err) {
-        console.error('❌ Neon connection error:', err.message)
-        throw err
-    }
+    sql = neon(process.env.DATABASE_URL)
+    console.log('✅ Neon PostgreSQL client initialized')
 }
 
 const getDb = () => {
-    if (!sql) throw new Error('Database not initialized. Call connectDB() first.')
+    if (!sql) {
+        if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL missing')
+        sql = neon(process.env.DATABASE_URL)
+    }
     return sql
 }
 
