@@ -2,37 +2,45 @@ const User = require('../models/User')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
 
-const getAllUsers = asyncHandler(async(req, res)=>{
-    const users = await User.find().select('-password').lean()
-    if(!users?.length)
-    return res.status(400).json({ message: 'No users found'})
-    res.json(users);
+// @desc  Get all users (without passwords)
+// @route GET /users
+// @access Private (admin)
+const getAllUsers = asyncHandler(async (req, res) => {
+    const users = await User.findAll()
+    if (!users?.length)
+        return res.status(400).json({ message: 'No users found' })
+    res.json(users)
 })
 
-const createNewUser = asyncHandler(async(req, res)=>{
-    const {username, email, password, mobile, fields } = req.body
+// @desc  Create a new user
+// @route POST /users
+// @access Public
+const createNewUser = asyncHandler(async (req, res) => {
+    const { username, email, password, mobile, fields } = req.body
 
-    if(!username||!email||!password||!mobile||!Array.isArray(fields)||!fields.length)
-    return res.status(400).json({message:'All fields required'})
+    if (!username || !email || !password || !mobile || !Array.isArray(fields) || !fields.length)
+        return res.status(400).json({ message: 'All fields required' })
 
-    const dup = await User.findOne({username}).lean().exec()
-    if(dup)
-    return res.status(409).json({message: 'Duplicate Username'})
+    // Check for duplicate username
+    const dup = await User.existsByUsername(username)
+    if (dup)
+        return res.status(409).json({ message: 'Username already taken' })
 
-    const hashedPwd = await bcrypt.hash(password,10)
+    const hashedPwd = await bcrypt.hash(password, 10)
 
-    const userObject = { username, email, "password": hashedPwd, mobile, fields}
+    const user = await User.create({
+        username,
+        email,
+        password: hashedPwd,
+        mobile,
+        fields,
+    })
 
-    const user = await User.create(userObject)
-    if(user){
-        res.status(201).json({message: 'New User created'})
-    }
-    else{
-        res.status(400).json({message: 'Invalid data'})
+    if (user) {
+        res.status(201).json({ message: 'Account created successfully' })
+    } else {
+        res.status(400).json({ message: 'Invalid data received' })
     }
 })
 
-module.exports = {
-    getAllUsers,
-    createNewUser
-}
+module.exports = { getAllUsers, createNewUser }

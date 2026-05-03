@@ -1,0 +1,261 @@
+/* Shared Auth Page Styles */
+.page {
+    min-height: calc(100vh - var(--navbar-height));
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: var(--navbar-height);
+}
+
+/* ── LEFT PANEL ── */
+.leftPanel {
+    position: relative;
+    background: linear-gradient(145deg, hsl(0, 0%, 8%), hsl(0, 0%, 12%));
+    padding: var(--space-12) var(--space-10);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    border-right: 1px solid var(--border);
+}
+
+.leftOrb {
+    position: absolute;
+    bottom: -200px;
+    right: -150px;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    background: radial-gradient(circle, hsl(43 90% 55% / 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.leftContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-width: 400px;
+    position: relative;
+    z-index: 1;
+}
+
+.logoMark {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: hsl(0, 0%, 5%);
+    box-shadow: 0 0 24px var(--gold-glow);
+}
+
+.leftTitle {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    line-height: 1.25;
+}
+
+.leftDesc {
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+.leftBullets {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+}
+
+.bullet {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+}
+
+.bulletDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+}
+
+/* ── RIGHT PANEL ── */
+.rightPanel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8);
+    background: var(--bg-base);
+}
+
+.formCard {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    animation: fadeInUp 0.5s ease both;
+}
+
+.formHeader {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.formTitle {
+    font-size: 1.75rem;
+    font-weight: 800;
+}
+
+.formSubtitle {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+}
+
+.formLink {
+    color: var(--gold);
+    font-weight: 500;
+    transition: color var(--transition);
+}
+
+.formLink:hover {
+    color: var(--gold-light);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+/* Password field */
+.passwordWrap {
+    position: relative;
+}
+
+.passwordWrap .form-input {
+    padding-right: 3rem;
+}
+
+.eyeBtn {
+    position: absolute;
+    right: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    transition: color var(--transition);
+}
+
+.eyeBtn:hover {
+    color: var(--text-primary);
+}
+
+/* Persist checkbox */
+.persistLabel {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    cursor: pointer;
+}
+
+.persistCheck {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--gold);
+    cursor: pointer;
+}
+
+.persistText {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Loading state */
+.loadingDots::after {
+    content: '';
+    animation: ellipsis 1.2s infinite;
+}
+
+@keyframes ellipsis {
+    0%   { content: ''; }
+    33%  { content: '.'; }
+    66%  { content: '..'; }
+    100% { content: '...'; }
+}
+
+/* Step indicators (for multi-step signup) */
+.steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: var(--space-4);
+}
+
+.stepDot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    transition: all var(--transition);
+    flex-shrink: 0;
+}
+
+.stepDot.done {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: hsl(0, 0%, 5%);
+}
+
+.stepDot.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-glow);
+}
+
+.stepLine {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    transition: background var(--transition);
+}
+
+.stepLine.done {
+    background: var(--gold);
+}
+
+/* Chip grid for interests */
+.chipGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+    .page {
+        grid-template-columns: 1fr;
+    }
+    .leftPanel {
+        display: none;
+    }
+    .rightPanel {
+        padding: var(--space-6) var(--space-4);
+        min-height: calc(100vh - var(--navbar-height));
+    }
+}

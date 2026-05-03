@@ -1,31 +1,30 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
+  "name": "skillorbit-backend",
+  "version": "2.0.0",
+  "description": "SkillOrbit API Server",
   "main": "index.js",
   "scripts": {
-    "start": "node server",
-    "dev": "nodemon server"
+    "start": "node index",
+    "dev": "nodemon index",
+    "db:migrate": "node db/migrate.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.0",
-    "careerjet": "^0.3.1",
+    "@neondatabase/serverless": "^0.9.3",
+    "axios": "^1.6.7",
+    "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "date-fns": "^2.29.3",
-    "dotenv": "^16.0.3",
+    "date-fns": "^2.30.0",
+    "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
-    "express-rate-limit": "^6.7.0",
-    "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.0.0",
-    "mongoose-sequence": "^5.3.1",
-    "nodemon": "^2.0.21",
-    "path": "^0.12.7",
-    "udemy-api": "^1.0.0",
-    "uuid": "^9.0.0"
+    "express-rate-limit": "^7.1.5",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.0.3",
+    "uuid": "^9.0.0",
+    "ws": "^8.17.0"
   }
 }
