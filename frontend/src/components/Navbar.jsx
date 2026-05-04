@@ -4,6 +4,7 @@ import { Orbit, LogIn, UserPlus, LayoutDashboard, BookOpen, Briefcase, LogOut, U
 import useAuth from '../hooks/useAuth'
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import styles from './Navbar.module.css'
+import BASE_URL from '../app/api/baseUrl'
 
 const NAV_ITEMS_AUTH = [
     { to: '/dash',         icon: <LayoutDashboard size={15} />, label: 'Dashboard' },
@@ -14,6 +15,7 @@ const NAV_ITEMS_AUTH = [
 const Navbar = () => {
     const [scrolled, setScrolled]       = useState(false)
     const [mobileOpen, setMobileOpen]   = useState(false)
+    const [healthStatus, setHealthStatus] = useState('checking')
     const location  = useLocation()
     const navigate  = useNavigate()
     const { username } = useAuth()
@@ -35,6 +37,22 @@ const Navbar = () => {
         return () => { document.body.style.overflow = '' }
     }, [mobileOpen])
 
+    /* health check */
+    useEffect(() => {
+        const checkHealth = async () => {
+            try {
+                const res = await fetch(`${BASE_URL}/health`)
+                if (res.ok) setHealthStatus('ok')
+                else setHealthStatus('error')
+            } catch (err) {
+                setHealthStatus('error')
+            }
+        }
+        checkHealth()
+        const interval = setInterval(checkHealth, 30000)
+        return () => clearInterval(interval)
+    }, [])
+
     const handleLogout = async () => {
         try { await sendLogout(); navigate('/') }
         catch { /* silent */ }
@@ -48,15 +66,24 @@ const Navbar = () => {
             <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
                 <div className={`container ${styles.inner}`}>
 
-                    {/* ── Logo ── */}
-                    <Link to="/" className={styles.logo} aria-label="SkillOrbit home">
-                        <div className={styles.logoIcon}>
-                            <Orbit size={18} strokeWidth={2.5} />
+                    {/* ── Logo & Health ── */}
+                    <div className={styles.brandGroup}>
+                        <Link to="/" className={styles.logo} aria-label="SkillOrbit home">
+                            <div className={styles.logoIcon}>
+                                <Orbit size={18} strokeWidth={2.5} />
+                            </div>
+                            <span className={styles.logoText}>
+                                Skill<span className={styles.logoAccent}>Orbit</span>
+                            </span>
+                        </Link>
+                        
+                        <div 
+                            className={`${styles.healthIndicator} ${styles[healthStatus]}`}
+                            title={`API Status: ${healthStatus === 'ok' ? 'Online' : healthStatus === 'error' ? 'Offline' : 'Checking'}`}
+                        >
+                            <div className={styles.healthDot} />
                         </div>
-                        <span className={styles.logoText}>
-                            Skill<span className={styles.logoAccent}>Orbit</span>
-                        </span>
-                    </Link>
+                    </div>
 
                     {/* ── Desktop Nav (centre pill strip) ── */}
                     {username && (

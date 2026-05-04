@@ -9,6 +9,7 @@ export default defineConfig({
       '/auth': 'http://localhost:3600',
       '/users': 'http://localhost:3600',
       '/dash': 'http://localhost:3600',
+      '/health': 'http://localhost:3600',
     }
   }
 })
