@@ -6,10 +6,9 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      '/auth': 'http://localhost:3600',
-      '/users': 'http://localhost:3600',
-      '/dash': 'http://localhost:3600',
-      '/health': 'http://localhost:3600',
+      '/auth': 'https://techdome.onrender.com:3600',
+      '/users': 'https://techdome.onrender.com:3600',
+      '/dash': 'https://techdome.onrender.com:3600',
     }
   }
 })

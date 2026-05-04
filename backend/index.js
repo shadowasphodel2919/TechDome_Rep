@@ -16,7 +16,6 @@ app.use(cookieParser())
 app.use('/', express.static(path.join(__dirname, '/public')))
 
 app.use('/', require('./routes/root'))
-app.get('/health', (req, res) => res.status(200).json({ status: 'ok', message: 'Backend is healthy' }))
 app.use('/auth', require('./routes/authRoutes'))
 app.use('/users', require('./routes/userRoutes'))
 app.use('/dash', require('./routes/dashRoutes'))
